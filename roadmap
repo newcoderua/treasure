@@ -1,0 +1,20 @@
+- npm init - answer all question - name app, etc.
+- you can change "test" for "start" : "node app" and - then run in cli npm start, which will run node app
+- npm install --save express
+- setting up app.js
+- npm install --save pug //basically it is a view engine
+- in views create index.pug -> be consistent(only use indent)
+- npm install -g (global) nodemon //so we do not have to restart server everytime
+- after nodemon I should run nodemon except npm start
+- we can iterate inside pug, add extension in settings for pug -> so it can nicely highlight it
+- npm install --save mongoose
+- to restart nodemon anytime type rs and hit enter
+- change app to listen from DB
+- to add customer to database we need body parser module npm install --save body-parser , then gooogle body parser github and bring two lines of code
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+- next make it nice by adding bower & bootstrap, BOwer is frontend packegae manager. npm install -g bower, create .bowerrc, run bower install bootstrap
+- go to view-source:https://getbootstrap.com/docs/4.0/examples/starter-template/ and grab <nav>
+- then google "jade to html" and transform your html int pug version. it will give me some crap, so just check my layout for container. 

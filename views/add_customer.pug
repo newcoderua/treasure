@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{customer}
+  form(method='post', action='/customers/add')
+    #form-group
+      label First name:
+      input.form-control(name="first_name", type='text')
+    #form-group
+      label Last name:
+      input.form-control(name="last_name", type='text')
+    #form-group
+      label Gender:
+      input.form-control(name="gender", type='text')
+    #form-group
+      label Age:
+      input.form-control(name="age", type='number')
+    input.btn.btn-primary(type='submit', value='Submit')
