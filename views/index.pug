@@ -4,4 +4,5 @@ block content
   h1 #{customer}
   ul.list-group
     each customer, i in customers
-      li.list-group-item= [customer.first_name, customer.last_name]
+      li.list-group-item
+        a(href='/customer/'+customer._id)= [customer.first_name, customer.last_name]

@@ -47,6 +47,46 @@ app.get('/', (req, res) => {
   });
 });
 
+// Get single customer
+app.get('/customer/:id', (req, res) => {
+  // debugger
+  Customer.findById(req.params.id, (err, customer) => {
+    res.render('customer', {
+      customer: customer
+    });
+  });
+});
+
+//Edit customer
+app.get('/customer/edit/:id', (req, res) => {
+  // debugger
+  Customer.findById(req.params.id, (err, customer) => {
+    res.render('edit_customer', {
+      customer: customer
+    });
+  });
+});
+
+//Update Submit Post route
+app.post('/customers/edit/:id', (req, res) => {
+    let customer = {};
+    customer.first_name = req.body.first_name;
+    customer.last_name = req.body.last_name;
+    customer.gender = req.body.gender;
+    customer.age = req.body.age;
+
+    let query = { _id: req.params.id }
+
+    Customer.update(query, customer, (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+
 //Add route
 app.get('/customers/add', (req, res) => {
   res.render('add_customer', {
@@ -68,6 +108,18 @@ app.post('/customers/add', (req, res) => {
       return;
     } else {
       res.redirect('/');
+    }
+  });
+});
+
+//Deleting customer
+app.delete('/customer/:id', (req, res) => {
+  let query = { _id: req.params.id };
+  Customer.remove(query, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send('Success'); // by default it sends 200
     }
   });
 });

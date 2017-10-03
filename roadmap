@@ -17,4 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 - next make it nice by adding bower & bootstrap, BOwer is frontend packegae manager. npm install -g bower, create .bowerrc, run bower install bootstrap
 - go to view-source:https://getbootstrap.com/docs/4.0/examples/starter-template/ and grab <nav>
-- then google "jade to html" and transform your html int pug version. it will give me some crap, so just check my layout for container. 
+- then google "jade to html" and transform your html int pug version. it will give me some crap, so just check my layout for container.
+
+- ok, so after we implemented delete method using jQuery and AJAX request, I would start working on messaging. means when you create or update something - we want to see it, also I can catch errors.
+- we gonna use express-messagind and express-validator.
+- npm install --save express-messages express-session connect-flash express-validator

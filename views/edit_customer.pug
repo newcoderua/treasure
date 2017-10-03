@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Edit Customer
+  form(method='post', action='/customers/edit/'+customer._id)
+    #form-group
+      label First name:
+      input.form-control(name="first_name", type='text', value=customer.first_name)
+    #form-group
+      label Last name:
+      input.form-control(name="last_name", type='text', value=customer.last_name)
+    #form-group
+      label Gender:
+      input.form-control(name="gender", type='text', value=customer.gender)
+    #form-group
+      label Age:
+      input.form-control(name="age", type='number', value=customer.age)
+    br
+    input.btn.btn-primary(type='submit', value='Submit')

@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= [customer.first_name, customer.last_name]
+  h2= customer.age
+  h2= customer.gender
+  hr
+  a.btn.btn-default(href='/customer/edit/'+customer._id) Edit
+  a.btn.btn-danger.delete-customer(href='#', data-id=customer._id) Delete
