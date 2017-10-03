@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= [customer.first_name, customer.last_name]
+  h1 #{customer.first_name} #{customer.last_name}
   h2= customer.age
   h2= customer.gender
   hr

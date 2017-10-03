@@ -22,3 +22,5 @@ app.use(bodyParser.json())
 - ok, so after we implemented delete method using jQuery and AJAX request, I would start working on messaging. means when you create or update something - we want to see it, also I can catch errors.
 - we gonna use express-messagind and express-validator.
 - npm install --save express-messages express-session connect-flash express-validator
+- so now I would like to refactor my code - add routes and make it nice.
+-

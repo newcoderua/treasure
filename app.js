@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 mongoose.connect('mongodb://localhost/treasure');
 let db = mongoose.connection;
@@ -31,7 +34,45 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Set Public Folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Express session Middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+
+//Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
+//Express Validator Middleware
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  },
+   customValidators: {
+    isPsd1EqPsd2: function(psd1,psd2) {
+        console.log(psd1===psd2);
+        return psd1===psd2;
+    }
+ }
+}));
 
 //Home route
 app.get('/', (req, res) => {
@@ -82,6 +123,7 @@ app.post('/customers/edit/:id', (req, res) => {
         console.log(err);
         return;
       } else {
+        req.flash('success', 'Customer info updated');
         res.redirect('/');
       }
     });
@@ -96,20 +138,35 @@ app.get('/customers/add', (req, res) => {
 
 //Add Submit POST route
 app.post('/customers/add', (req, res) => {
-  let customer = new Customer();
-  customer.first_name = req.body.first_name;
-  customer.last_name = req.body.last_name;
-  customer.gender = req.body.gender;
-  customer.age = req.body.age;
+  req.checkBody('first_name', 'First name is required').notEmpty(); // it is validator stuff,
+  // if I need more I can check in documentation, express-validator
+  req.checkBody('last_name', 'Last name is required').notEmpty();
+  req.checkBody('gender', 'Gender is required').notEmpty();
+  req.checkBody('age', 'Age is required').notEmpty();
 
-  customer.save((err) => {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      res.redirect('/');
-    }
-  });
+  let errors = req.validationErrors();
+
+  if (errors) {
+    res.render('add_customer', {
+      errors: errors,
+    });
+  } else {
+    let customer = new Customer();
+    customer.first_name = req.body.first_name;
+    customer.last_name = req.body.last_name;
+    customer.gender = req.body.gender;
+    customer.age = req.body.age;
+
+    customer.save((err) => {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+        req.flash('success', 'Customer added');
+        res.redirect('/');
+      }
+    });
+  }
 });
 
 //Deleting customer
