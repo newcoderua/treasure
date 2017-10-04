@@ -23,4 +23,6 @@ app.use(bodyParser.json())
 - we gonna use express-messagind and express-validator.
 - npm install --save express-messages express-session connect-flash express-validator
 - so now I would like to refactor my code - add routes and make it nice.
--
+- I created routes folder with customer.js where I brought al routes except of Home, also do not forget to move /:id after /add, it might be an issue.
+- now user registration. We use Passport - unobtrusive auth for Node.js
+- npm install --save passport passport-local bcryptjs
