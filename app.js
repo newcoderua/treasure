@@ -5,8 +5,10 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
+const config = require('./config/database');
 
-mongoose.connect('mongodb://localhost/treasure');
+mongoose.connect(config.database);
 let db = mongoose.connection;
 
 //check for db erros
@@ -74,6 +76,12 @@ app.use(expressValidator({
  }
 }));
 
+//passport config
+require('./config/passport')(passport);
+//passport Middleware 
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Home route
 app.get('/', (req, res) => {
   let customers = Customer.find({}, (err, customers) => {
@@ -90,7 +98,9 @@ app.get('/', (req, res) => {
 
 //Route Files
 let customers = require('./routes/customers');
+let users = require('./routes/users');
 app.use('/customers', customers);
+app.use('/users', users);
 
 app.listen(3000, () => {
   console.log("Server started on port 3000...");

@@ -25,4 +25,6 @@ app.use(bodyParser.json())
 - so now I would like to refactor my code - add routes and make it nice.
 - I created routes folder with customer.js where I brought al routes except of Home, also do not forget to move /:id after /add, it might be an issue.
 - now user registration. We use Passport - unobtrusive auth for Node.js
-- npm install --save passport passport-local bcryptjs
+- npm install --save passport passport-local bcryptjs.
+so, we start work on password for auth, so we create folder config. and then there 2 files database and passport.js
+- 
