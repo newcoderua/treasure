@@ -21,10 +21,14 @@ html
             li
               a(href='/customers/add') Add Customer
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/users/register') Sign Up
-            li 
-              a(href='/users/login') Login
+            if user
+              li 
+                a(href='/users/logout') Log Out
+            else
+              li
+                a(href='/users/register') Sign Up
+              li 
+                a(href='/users/login') Login
     .container
       != messages('message', locals)
       if errors

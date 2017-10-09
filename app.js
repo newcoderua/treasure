@@ -78,9 +78,17 @@ app.use(expressValidator({
 
 //passport config
 require('./config/passport')(passport);
-//passport Middleware 
+//passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// this one to make sure you logged in, if yes you can see logOut.
+
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+})
+
 
 //Home route
 app.get('/', (req, res) => {
